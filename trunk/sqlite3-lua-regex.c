@@ -1,4 +1,5 @@
 #include "sqlite3.h"
+#include "lua-regex.h"
 
 static void sqlite3_regexp( sqlite3_context *context, int argc, sqlite3_value **argv ) {
     assert(argc == 2);
