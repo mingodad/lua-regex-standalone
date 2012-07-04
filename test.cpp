@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "lua_regex.h"
+#include "lua-regex.h"
 
 std::string gsub(const char *src, const char *re, const char *replace){
     std::string result;
