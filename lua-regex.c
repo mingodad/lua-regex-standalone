@@ -30,7 +30,7 @@ http://code.google.com/p/lua-regex-standalone/
 #include <stdlib.h>
 #include <ctype.h>
 
-#include "lua_regex.h"
+#include "lua-regex.h"
 
 /* macro to `unsign' a character */
 #define uchar(c)    ((unsigned char)(c))
