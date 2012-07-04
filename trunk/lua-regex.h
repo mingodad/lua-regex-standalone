@@ -33,6 +33,7 @@ extern "C" {
 #endif
 
 #include <sys/types.h>
+#include <stddef.h>
 
 /*
 ** maximum number of captures that a pattern can do during
