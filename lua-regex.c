@@ -50,8 +50,9 @@ static size_t posrelat (ptrdiff_t pos, size_t len) {
 
 
 static int check_capture (LuaMatchState *ms, int *l_out) {
+  int l;
   *l_out -= '1';
-  int l = *l_out;
+  l = *l_out;
   if (l < 0 || l >= ms->level || ms->capture[l].len == CAP_UNFINISHED){
       ms->error = "invalid capture index";
       return 0;
@@ -229,8 +230,8 @@ static const char *start_capture (LuaMatchState *ms, const char *s,
 static const char *end_capture (LuaMatchState *ms, const char *s,
                                   const char *p) {
   int l;
-  if(!capture_to_close(ms, &l)) return NULL;
   const char *res;
+  if(!capture_to_close(ms, &l)) return NULL;
   ms->capture[l].len = s - ms->capture[l].init;  /* close capture */
   if ((res = match(ms, s, p)) == NULL)  /* match failed? */
     ms->capture[l].len = CAP_UNFINISHED;  /* undo capture */
@@ -302,8 +303,9 @@ static const char *match (LuaMatchState *ms, const char *s, const char *p) {
     }
     default: dflt: {  /* pattern class plus optional suffix */
       const char *ep;
+      int m;
       if(!classend(ms, p, &ep)) return NULL;  /* points to what is next */
-      int m = s < ms->src_end && singlematch(uchar(*s), p, ep);
+      m = s < ms->src_end && singlematch(uchar(*s), p, ep);
       switch (*ep) {
         case '?': {  /* optional */
           const char *res;
@@ -518,11 +520,14 @@ static int add_value (LuaMatchState *ms, char_buffer_st **b, const char *s,
 
 char_buffer_st *str_gsub (const char *src, size_t srcl, const char *p, size_t lp,
                           const char *tr, size_t max_s, const char **error_ptr) {
-  if(max_s == 0) max_s = srcl+1;
-  int anchor = (*p == '^');
-  size_t n = NEW_SIZE(srcl);
+  int anchor;
+  size_t n;
   LuaMatchState ms;
-  char_buffer_st *b = (char_buffer_st*)malloc(sizeof(char_buffer_st) + n);
+  char_buffer_st *b;
+  if(max_s == 0) max_s = srcl+1;
+  anchor = (*p == '^');
+  n = NEW_SIZE(srcl);
+  b = (char_buffer_st*)malloc(sizeof(char_buffer_st) + n);
   if(!b) return NULL;
   b->size = n;
   b->used = 0;
