@@ -4,8 +4,8 @@
 static void sqlite3_regexp( sqlite3_context *context, int argc, sqlite3_value **argv ) {
     assert(argc == 2);
     LuaMatchState ms;
-    const char *subject = (const char *)sqlite3_value_text(argv[0]);
-    const char *pattern = (const char *)sqlite3_value_text(argv[1]);
+    const char *subject = (const char *)sqlite3_value_text(argv[1]);
+    const char *pattern = (const char *)sqlite3_value_text(argv[0]);
     assert(argc == 2);
     if(str_find(&ms, subject, strlen(subject), pattern, strlen(pattern), 0, 0))
         sqlite3_result_int(context, 1);
